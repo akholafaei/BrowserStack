@@ -65,35 +65,36 @@ def run_session(desired_cap):
         title_on_homepage = wait.until(EC.visibility_of_element_located((By.XPATH, '//main[@id="main-content"]//h1'))).text
         if title_on_homepage == "App & Browser Testing Made Easy":
             # Set the status of test as 'passed' or 'failed' based on the condition;if the title that expected to be 'App & Browser Testing Made Easy'
-            driver.execute_script('browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"passed", "reason": "Title of the home page is as expected"}}')
-        else:
-            driver.execute_script('browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed", "reason": "Title of the homepage is NOT as expected"}}')
-
+            driver.execute_script('browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"passed", "reason": "Title of the home page is as expected"}}')   
+            
+    except NoSuchElementException:
+        driver.execute_script('browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed", "reason": "Title of the homepage is NOT as expected"}}')
+    
+    try:    
         # Click on Live link
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, "//div[@class='relative']//a[@title='Live']"))).click()
         # Get the title text on the top og the Live page and verify its as expected
         title_on_live_page = wait.until(EC.visibility_of_element_located((By.XPATH, "//a[@id='sec-header-title']//span"))).text
         if title_on_live_page == "Live":
-            # Set the status of test as 'passed' or 'failed' based on the condition; if the title that expected to be 'App & Browser Testing Made Easy'
+            # Set the status of test as 'passed' or 'failed' based on the condition;if the title that expected to be 'App & Browser Testing Made Easy'
             driver.execute_script('browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"passed", "reason": "Title of the Live page is as expected"}}')
-        else:
+    except NoSuchElementException:
             driver.execute_script('browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed", "reason": "Title of Live page is NOT as Expected"}}')
 
-        # get back to the homepage
-        driver.back()
+    # get back to the homepage
+    driver.back()
 
         # Click on Automate link
+    try:
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, "//div[@class='relative']//a[@title='Automate']"))).click()
         # Get the title text on the top og the Automate page and verify its as expected
         title_on_live_page = wait.until(EC.visibility_of_element_located((By.XPATH, "//a[@id='sec-header-title']//span"))).text
         if title_on_live_page == "Automate":
             # Set the status of test as 'passed' or 'failed' based on the condition;if the title that expected to be 'App & Browser Testing Made Easy'
             driver.execute_script('browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"passed", "reason": "Title of the Automate page is as expected"}}')
-        else:
+    except NoSuchElementException:
             driver.execute_script('browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed", "reason": "Title of Automate page is NOT as Expected"}}')
 
-    except NoSuchElementException:
-        driver.execute_script('browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed", "reason": "Some elements failed to load"}}')
     # Stop the driver
     driver.quit()
 for cap in caps:
