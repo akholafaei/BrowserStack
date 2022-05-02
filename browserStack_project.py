@@ -74,7 +74,7 @@ def run_session(desired_cap):
         # Get the title text on the top og the Live page and verify its as expected
         title_on_live_page = wait.until(EC.visibility_of_element_located((By.XPATH, "//a[@id='sec-header-title']//span"))).text
         if title_on_live_page == "Live":
-            # Set the status of test as 'passed' or 'failed' based on the condition;if the title that expected to be 'App & Browser Testing Made Easy'
+            # Set the status of test as 'passed' or 'failed' based on the condition; if the title that expected to be 'App & Browser Testing Made Easy'
             driver.execute_script('browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"passed", "reason": "Title of the Live page is as expected"}}')
         else:
             driver.execute_script('browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed", "reason": "Title of Live page is NOT as Expected"}}')
